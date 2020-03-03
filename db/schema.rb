@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 3) do
 
-  create_table "boxguides", force: :cascade do |t|
+  create_table "boxguide", force: :cascade do |t|
     t.integer "service_id"
     t.integer "show_id"
   end

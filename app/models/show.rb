@@ -1,5 +1,5 @@
 class Show < ActiveRecord::Base
-    has_many :boxguide
+    has_many :boxguides
     has_many :services, through: :boxguide
 
     def streaming_services

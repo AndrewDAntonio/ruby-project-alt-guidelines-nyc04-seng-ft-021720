@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base
-    has_many :boxguide
+    has_many :boxguides
     has_many :shows, through: :boxguide
 
     def shows
