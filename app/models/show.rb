@@ -14,4 +14,8 @@ class Show < ActiveRecord::Base
         self.genre = new_genre
     end
 
+    def self.find_like(show_search)
+        show = Show.find_by("name like ?", show_search)
+        show.streaming_services
+    end
 end
