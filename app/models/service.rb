@@ -1,9 +1,9 @@
 class Service < ActiveRecord::Base
     has_many :boxguides
-    has_many :shows, through: :boxguide
+    has_many :shows, through: :boxguides
 
     def shows
-        self.shows
+        self.shows.map{|show| show.name}
     end
 
     def genre_count(genre_type)
@@ -14,7 +14,5 @@ class Service < ActiveRecord::Base
         shows = self.shows.where(genre: genre_type)
         shows.map{|show| show.name}
     end
-
-
 
 end

@@ -1,6 +1,6 @@
 class Show < ActiveRecord::Base
     has_many :boxguides
-    has_many :services, through: :boxguide
+    has_many :services, through: :boxguides
 
     def streaming_services
         self.services.map{|service| service.name}
