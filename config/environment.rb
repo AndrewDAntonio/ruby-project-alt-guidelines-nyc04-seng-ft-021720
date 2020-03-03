@@ -1,5 +1,3 @@
-# require_relative '../app/models/service.rb'
-
 require 'bundler'
 Bundler.require
 
