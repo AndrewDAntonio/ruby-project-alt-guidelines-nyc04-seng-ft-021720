@@ -1,5 +1,10 @@
+require_relative '../config/environment'
+
+require 'colorize'
+require 'tty-prompt'
+
 def welcome
-    puts "Welcome to BoxGuide!".colorize(:orange)
+    puts "Welcome to BoxGuide!".colorize(:red)
 end
 
 
@@ -24,11 +29,19 @@ def delegate(choice)
 end
 
 def quicksearch
-    puts "Enter a show name you would like to search"
+    puts "Boxguide will find streaming services that currently have your show."
+    puts "Enter the show name you would like to search:"
     search_show = gets.chomp
     Show.find_like(search_show)
 end
 
+def showOptions
+    puts "Choose an option for Shows"
+    menu.choice "Search Streaming Services for Show", 1
+    menu.choice "Update Show genre", 2
+    menu.choice "Create Show", 3
+    menu.choice
+end
 
 
 welcome
