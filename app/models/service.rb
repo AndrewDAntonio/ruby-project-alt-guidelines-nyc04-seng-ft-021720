@@ -6,14 +6,6 @@ class Service < ActiveRecord::Base
         self.shows
     end
 
-    def self.create(instance_name,name)
-        instance_name = Service.new(name)
-    end
-
-    def delete
-        self.destroy
-    end
-
     def genre_count(genre_type)
         self.shows.where(genre: genre_type).length
     end

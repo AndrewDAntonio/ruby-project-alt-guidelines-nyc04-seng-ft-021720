@@ -3,12 +3,7 @@ class Show < ActiveRecord::Base
     has_many :services, through: :boxguide
 
     def streaming_services
-        self.services
-    end
-
-    def self.create(name, genre)
-        downcase_genre = genre.downcase
-        Show.new(name, downcase_genre)
+        self.services.map{|service| service.name}
     end
 
     def add_service(service_name)

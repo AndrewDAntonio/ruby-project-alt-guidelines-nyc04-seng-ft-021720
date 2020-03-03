@@ -1,100 +1,100 @@
+#destroy all previous data upon run
+Service.destroy_all
+Show.destroy_all
+Boxguide.destroy_all
 
 #Service entries
-hulu = Service.new("Hulu")
-netflix = Service.new("Netflix")
-hbo = Service.new("HBO")
-primevideo = Service.new("PrimeVideo")
+hulu = Service.create(name: "Hulu")
+netflix = Service.create(name: "Netflix")
+hbo = Service.create(name: "HBO")
+primevideo = Service.create(name: "PrimeVideo")
 
 #Show (single platform) and BoxGuide entries
-theoffice = Show.new("The Office", "Comedy")
-office_net = BoxGuide.new(netflix, theoffice)
+theoffice = Show.create(name: "The Office", genre: "Comedy")
+office_net = Boxguide.create(service_id: netflix.id, show_id: theoffice.id)
 
-black_mirror = Show.new("Black Mirror", "Thriller")
-mirror_net = BoxGuide.new(netflix, black_mirror)
+black_mirror = Show.create(name: "Black Mirror", genre: "Thriller")
+mirror_net = Boxguide.create(service_id: netflix.id, show_id: black_mirror.id)
 
-stranger_things = Show.new("Stranger Things", "Thriller")
-stranger_net = BoxGuide.new(netflix, stranger_things)
+stranger_things = Show.create(name: "Stranger Things", genre: "Thriller")
+stranger_net = Boxguide.create(service_id: netflix.id, show_id: stranger_things.id)
 
-game_of_thrones = Show.new("Game of Thrones", "Sci-Fi")
-thrones_hbo = BoxGuide.new(hbo, game_of_thrones)
+game_of_thrones = Show.create(name: "Game of Thrones", genre: "Sci-Fi")
+thrones_hbo = Boxguide.create(service_id: hbo.id, show_id: game_of_thrones.id)
 
-west_world = Show.new("West World", "Sci-Fi")
-west_world_hbo = BoxGuide.new(hbo, west_world)
+west_world = Show.create(name: "West World", genre: "Sci-Fi")
+west_world_hbo = Boxguide.create(service_id: hbo.id, show_id: west_world.id)
 
-entourage = Show.new("Entourage", "Drama")
-entourage_hbo = Show.new(hbo, entourage)
+entourage = Show.create(name: "Entourage", genre: "Drama")
+entourage_hbo = Boxguide.create(service_id: hbo.id, show_id: entourage.id)
 
-his_dark_materials = Show.new("His Dark Materials", "Sci-Fi")
-his_dark_materials_hbo = BoxGuide.new(hbo, his_dark_materials)
+his_dark_materials = Show.create(name: "His Dark Materials", genre: "Sci-Fi")
+his_dark_materials_hbo = Boxguide.create(service_id: hbo.id, show_id: his_dark_materials.id)
 
-curb_your_enthusiasm = Show.new("Curb Your Enthusiasm", "Comdegy")
-curb_your_enthusiasm_hbo = BoxGuide.new(hbo, curb_your_enthusiasm)
+curb_your_enthusiasm = Show.create(name: "Curb Your Enthusiasm", genre: "Comedy")
+curb_your_enthusiasm_hbo = Boxguide.create(service_id: hbo.id, show_id: curb_your_enthusiasm.id)
 
-silicon_valley = Show.new("Silicon Valley", "Comedy")
-silicon_valley_hbo = BoxGuide.new(hbo, silicon_valley)
+silicon_valley = Show.create(name: "Silicon Valley", genre: "Comedy")
+silicon_valley_hbo = Boxguide.create(service_id: hbo.id, show_id: silicon_valley.id)
 
-rick_and_morty = Show.new("Rick and Morty", "Sci-Fi")
-rick_and_morty_hulu = BoxGuide.new(hulu, rick_and_morty)
+rick_and_morty = Show.create(name: "Rick and Morty", genre: "Sci-Fi")
+rick_and_morty_hulu = Boxguide.create(service_id: hulu.id, show_id: rick_and_morty.id)
 
-snl = Show.new("Saturday Night Live", "Comdegy")
-snl_hulu = BoxGuide.new(hulu, snl)
+snl = Show.create(name: "Saturday Night Live", genre: "Comedy")
+snl_hulu = Boxguide.create(service_id: hulu.id, show_id: snl.id)
 
-this_is_us = Show.new("This Is Us", "Drama")
-this_is_us_hulu = BoxGuide.new(hulu, this_is_us)
+this_is_us = Show.create(name: "This Is Us", genre: "Drama")
+this_is_us_hulu = Boxguide.create(service_id: hulu.id, show_id: this_is_us.id)
 
-shark_tank = Show.new("Shark Tank", "Drama")
-shark_tank_hulu = BoxGuide.new(hulu, shark_tank)
+shark_tank = Show.create(name: "Shark Tank", genre: "Drama")
+shark_tank_hulu = Boxguide.create(service_id: hulu.id, show_id: shark_tank.id)
 
-hunters = Show.new("Hunters", "Thriller")
-hunters_prime = BoxGuide.new(primevideo, hunters)
+hunters = Show.create(name: "Hunters", genre: "Thriller")
+hunters_prime = Boxguide.create(service_id: primevideo.id, show_id: hunters.id)
 
-spongebob = Show.new("Spongebob Squarepants", "Comedy")
-spongebob_prime = BoxGuide.new(primevideo, spongebob)
+spongebob = Show.create(name: "Spongebob Squarepants", genre: "Comedy")
+spongebob_prime = Boxguide.create(service_id: primevideo.id, show_id: spongebob.id)
 
 
 
-#Show (muliple platforms) and BoxGuide entries
-friends = Show.new("Friends", "Comedy")
-friends_net = BoxGuide.new(netflix, friends)
-friends_hulu = BoxGuide.new(hulu, friends)
+#Show (muliple platforms) and Boxguide entries
+friends = Show.create(name: "Friends", genre: "Comedy")
+friends_net = Boxguide.create(service_id: netflix.id, show_id: friends.id)
+friends_hulu = Boxguide.create(service_id: hulu.id, show_id: friends.id)
 
-modern_family = Show.new("Modern Family", "Comedy")
-modern_hulu = BoxGuide.new(hulu, modern_family)
-modern_prime = BoxGuide.new(primevideo, modern_family)
+modern_family = Show.create(name: "Modern Family", genre: "Comedy")
+modern_hulu = Boxguide.create(service_id: hulu.id, show_id: modern_family.id)
+modern_prime = Boxguide.create(service_id: primevideo.id, show_id: modern_family.id)
 
-the_good_place = Show.new("The Good Place", "Comedy")
-good_place_net = BoxGuide.new(netflix, the_good_place)
-good_place_hulu = BoxGuide.new(hulu, the_good_place)
+the_good_place = Show.create(name: "The Good Place", genre: "Comedy")
+good_place_net = Boxguide.create(service_id: netflix.id, show_id: the_good_place.id)
+good_place_hulu = Boxguide.create(service_id: hulu.id, show_id: the_good_place.id)
 
-bachelor = Show.new("the Bachelor", "Drama")
-bachelor_net = BoxGuide.new(netflix, bachelor)
-bachelor_hulu = BoxGuide.new(hulu, bachelor)
-bachelor_prime = BoxGuide.new(primevideo, bachelor)
+bachelor = Show.create(name: "the Bachelor", genre: "Drama")
+bachelor_net = Boxguide.create(service_id: netflix.id, show_id: bachelor.id)
+bachelor_hulu = Boxguide.create(service_id: hulu.id, show_id: bachelor.id)
+bachelor_prime = Boxguide.create(service_id: primevideo.id, show_id: bachelor.id)
 
-brooklyn_nine = Show.new("Brooklyn Nine-Nine", "Comedy")
-brooklyn_net = BoxGuide.new(netflix, brooklyn_nine)
-brooklyn_hulu = BoxGuide.new(hulu, brooklyn_nine)
+brooklyn_nine = Show.create(name: "Brooklyn Nine-Nine", genre: "Comedy")
+brooklyn_net = Boxguide.create(service_id: netflix.id, show_id: brooklyn_nine.id)
+brooklyn_hulu = Boxguide.create(service_id: hulu.id, show_id: brooklyn_nine.id)
 
-family_guy = Show.new("Family Guy", "Comedy")
-family_guy_net = BoxGuide.new(netflix, family_guy)
-family_guy_hulu = BoxGuide.new(hulu, family_guy)
-family_guy_prime = BoxGuide.new(primevideo, family_guy)
+family_guy = Show.create(name: "Family Guy", genre: "Comedy")
+family_guy_net = Boxguide.create(service_id: netflix.id, show_id: family_guy.id)
+family_guy_hulu = Boxguide.create(service_id: hulu.id, show_id: family_guy.id)
+family_guy_prime = Boxguide.create(service_id: primevideo.id, show_id: family_guy.id)
 
-american_horror_story = Show.new("American Horror Story", "Thriller")
-american_horror_story_net = BoxGuide.new(netflix, american_horror_story)
-american_horror_story_hulu = BoxGuide.new(hulu, american_horror_story)
+american_horror_story = Show.create(name: "American Horror Story", genre: "Thriller")
+american_horror_story_net = Boxguide.create(service_id: netflix.id, show_id: american_horror_story.id)
+american_horror_story_hulu = Boxguide.create(service_id: hulu.id, show_id: american_horror_story.id)
 
-#greys_anatomy = Show.new("Grey's Anatomy", "Drama")
-#greys_net = (netflix, greys_anatomy)
-#greys_hulu = (hulu, greys_anatomy)
+you = Show.create(name: "You", genre: "Thriller")
+you_net = Boxguide.create(service_id: netflix.id, show_id: you.id)
+you_prime = Boxguide.create(service_id: primevideo.id, show_id: you.id)
 
-you = Show.new("You", "Thriller")
-you_net = BoxGuide.new(netflix, you)
-you_prime = BoxGuide.new(primevideo, you)
-
-walking_dead = Show.new("The Walking Dead", "Thriller")
-walking_dead_net = BoxGuide.new(netflix, walking_dead)
-walking_dead_prime = BoxGuide.new(primevideo, walking_dead)
+walking_dead = Show.create(name: "The Walking Dead", genre: "Thriller")
+walking_dead_net = Boxguide.create(service_id: netflix.id, show_id: walking_dead.id)
+walking_dead_prime = Boxguide.create(service_id: primevideo.id, show_id: walking_dead.id)
 
 
 
