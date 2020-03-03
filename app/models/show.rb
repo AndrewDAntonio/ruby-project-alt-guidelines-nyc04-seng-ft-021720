@@ -7,7 +7,7 @@ class Show < ActiveRecord::Base
     end
 
     def add_service(service_name)
-        BoxGuide.new(service_name, self)
+        Boxguide.new(service_name, self)
     end
 
     def update_genre(new_genre)
