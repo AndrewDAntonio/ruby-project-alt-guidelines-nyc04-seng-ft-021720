@@ -8,7 +8,7 @@ class Service < ActiveRecord::Base
 
     def shows_by_genre(genre_type)
         shows = self.shows.where("genre like ?", genre_type)
-        puts shows.map{|show| show.name}
+        shows.map{|show| show.name}
     end
 
 end

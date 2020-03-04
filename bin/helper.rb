@@ -5,12 +5,12 @@ require 'tty-prompt'
 require 'pry'
 
 
-def run_boxguide
-    puts "Welcome to Boxguide.".colorize(:red)
+def run_boxguide  #method to run our app
+    puts "Welcome to Boxguide.".colorize(:blue)
     shows_or_services
 end
 
-def shows_or_services
+def shows_or_services #main menu
     prompt = TTY::Prompt.new
     answer = prompt.select("Where would you like to start?") do |menu|
         menu.choice name: 'Shows', value: 1
@@ -18,25 +18,25 @@ def shows_or_services
         menu.choice name: 'Quick Search', value: 3
         menu.choice name: 'Exit', value: 4
     end
-    if answer == 1
+    if answer == 1 
         show_options
-    elsif answer == 2
+    elsif answer == 2 
         service_choices
-    elsif answer == 3
+    elsif answer == 3 
         quicksearch
-    else
-        puts "Thanks for visiting Boxguide!"
+    else 
+        puts "Thanks for visiting Boxguide!".colorize(:blue)
     end 
 end
 
-def service_choices
+def service_choices #displays the list of options that can be done to the available Streaming Services
     prompt = TTY::Prompt.new
-    choices = Service.all.map{|service| service.name}
-    choices << "Dont see the service you're looking for? Add it here!"
+    choices = Service.all.map{|service| service.name} #used to create a drop down of all the SS available
+    choices << "Dont see the service you're looking for? Add it here!" 
     choices << "Back to Main Menu"
     selected_service = prompt.select("Select the Streaming Service you would like to learn more about.", choices)
    
-    if selected_service == choices[-2]
+    if selected_service == choices[-2] 
         create_new_service
     elsif selected_service == choices[-1]
         puts "Taking you back to the Main Menu"
@@ -47,23 +47,10 @@ def service_choices
     end
 end
 
-def service_info(streaming_service)
+def service_info(streaming_service) #displays a list of options for a streaming network
     service_instance = Service.all.find_by(name: streaming_service)
-    if service_instance.shows == []
-        prompt = TTY::Prompt.new
-        answer = prompt.select("There are no shows available for that service. Would you like to add one?") do |menu|
-           menu.choice name: "Yes", value: 1
-           menu.choice name: "No", value: 2 
-        end
-        if answer == 1
-            puts "Taking you to the Create Show Menu"
-            sleep 2
-            add_service_to_show
-        else
-            puts "There's not much you can do if the service has no shows. Lets go pick another Streaming Service to look at."
-            sleep 2
-            service_choices
-        end
+    if service_instance.shows == [] 
+        redirect_to_add_shows
     else
         prompt = TTY::Prompt.new
         answer = prompt.select("What would you like to learn about #{streaming_service}") do |menu|
@@ -72,28 +59,23 @@ def service_info(streaming_service)
             menu.choice name: "Number of Shows by Genre Type", value: 3
             menu.choice name: "Return to Main Menu", value: 4
         end
-        if answer == 1
-            puts service_instance.shows.map{|show| show.name}
-            sleep 2
-            service_info(streaming_service)
-        elsif answer == 2
-            prompt = TTY::Prompt.new
-            answer = prompt.ask("What genre are you interested in?")
-            puts "Here are the #{answer} shows on this platform!"
-            puts service_instance.shows_by_genre(answer)
-            sleep 2
-            service_info(streaming_service)
-        elsif answer == 3
-            prompt = TTY::Prompt.new
-            answer = prompt.ask("What genre are you interested in?")
-            puts "There are #{service_instance.genre_count(answer)} shows on #{streaming_service} that fall under the #{answer} genre"
-            sleep 2
-            service_info(streaming_service)
-        else
-            puts "Returning to Main Menu!"
-            sleep 2
-            shows_or_services
-        end
+    end
+    if answer == 1
+        puts service_instance.shows.map{|show| show.name}
+        sleep 2
+        service_info(streaming_service)
+    elsif answer == 2
+        service_genre_search(service_instance)
+        sleep 2
+        service_info(streaming_service)
+    elsif answer == 3
+        service_genre_count(service_instance)
+        sleep 2
+        service_info(streaming_service)
+    else
+        puts "Returning to Main Menu!"
+        sleep 2
+        shows_or_services
     end
 end
 
@@ -105,6 +87,45 @@ def create_new_service
     puts "#{answer} has been added to our list of Streaming Services"
     service_choices
 end
+
+def redirect_to_add_shows
+    prompt = TTY::Prompt.new
+    answer = prompt.select("There are no shows available for that service. Would you like to add one?") do |menu|
+        menu.choice name: "Yes", value: 1
+        menu.choice name: "No", value: 2 
+    end
+    if answer == 1
+        puts "Taking you to the Create Show Menu"
+        sleep 2
+        add_service_to_show
+    else
+        puts "There's not much you can do if the service has no shows. Lets go pick another Streaming Service to look at."
+        sleep 2
+        service_choices
+    end
+end
+
+def service_genre_search(streaming_instance)
+    prompt = TTY::Prompt.new
+    answer = prompt.ask("What genre are you interested in?")
+    if streaming_instance.shows_by_genre(answer) != nil
+        puts "Here are the #{answer} shows on this platform!"
+        puts streaming_instance.shows_by_genre(answer)
+     else
+        puts "It doesn't look like there are any shows with that genre here."
+    end
+end
+
+def service_genre_count(streaming_instance)
+    prompt = TTY::Prompt.new
+    answer = prompt.ask("What genre are you interested in?")
+    if streaming_instance.genre_count(answer) == nil
+        puts "There are no #{answer} shows on #{streaming_instance.name}"
+    else
+        puts "There are #{streaming_instance.genre_count(answer)} shows on #{streaming_instance.name} that fall under the #{answer} genre"
+    end
+end
+
 
 ################################################SHOWS###############################################################
 
@@ -144,7 +165,7 @@ def show_options
         menu.choice name: 'Find genre of a Show', value: 2
         menu.choice name: 'Add Show to database', value: 3
         menu.choice name: 'Add Streaming Service to Show', value: 4
-        menu.choice name: 'Exit', value: 5
+        menu.choice name: 'Return to Main Menu', value: 5
     end
     if choice == 1
         quicksearch
@@ -160,12 +181,21 @@ def show_options
 end
 
 def show_genre
+    counter = 0
     puts "What Show would you like to find the genre for?"
     search_show = gets.chomp
     result = auth_show(search_show)
     if result == nil
         spell
-        show_genre
+        search_show = gets.chomp
+        result = auth_show(search_show)
+        if result == nil
+            puts "It looks like we don't have that show. Taking you back to the Show menu"
+            sleep 2
+            show_options
+        else
+            puts results.genre
+        end
     else
         puts result.genre
     end

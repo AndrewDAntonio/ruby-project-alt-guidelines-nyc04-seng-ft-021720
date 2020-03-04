@@ -83,7 +83,13 @@ def create_new_service
     puts "#{answer} has been added to our list of Streaming Services"
 end
 
-welcome
-shows_or_services
+def service_genre_search(streaming_instance)
+    prompt = TTY::Prompt.new
+        answer = prompt.ask("What genre are you interested in?")
+        puts "Here are the #{answer} shows on this platform!"
+        puts service_instance.shows_by_genre(answer)
+        sleep 2
+        service_info(streaming_instance.name)
+end
 
 
