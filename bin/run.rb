@@ -9,7 +9,7 @@ require 'tty-prompt'
 require 'colorize'
 
 def welcome
-    puts "Welcome to Boxguide."
+    puts "Welcome to Boxguide.".colorize(:red)
 end
 
 def shows_or_services
@@ -29,3 +29,4 @@ def shows_or_services
         puts "Thanks for visiting Boxguide!"
     end 
 end
+
